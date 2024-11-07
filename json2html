@@ -1,0 +1,32 @@
+// json2html.js
+
+export default function json2html(data) {
+  // Extract all unique keys to ensure all columns are covered, even if missing in some rows
+  const columns = [...new Set(data.flatMap(Object.keys))];
+
+  // Start building the HTML table with the specified attribute
+  let html = '<table data-user="simran@palreddy.in">';
+
+  // Create the table header
+  html += '<thead><tr>';
+  columns.forEach(column => {
+    html += `<th>${column}</th>`;
+  });
+  html += '</tr></thead>';
+
+  // Create the table body
+  html += '<tbody>';
+  data.forEach(row => {
+    html += '<tr>';
+    columns.forEach(column => {
+      html += `<td>${row[column] !== undefined ? row[column] : ''}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+
+  // Close the table tag
+  html += '</table>';
+
+  return html;
+}
